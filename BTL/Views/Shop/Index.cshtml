@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@model X.PagedList.IPagedList<Product>
+
+<!-- product items banner start -->
+<div class="product-banner">
+    <img src="~/img/product/banner.jpg" alt="">
+</div>
+<!-- product items banner end -->
+<!-- product main items area start -->
+<div class="product-main-items">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="location">
+                    <ul>
+                        <li><a asp-controller="Store" asp-action="Index" title="go to homepage">Home<span>/</span></a>  </li>
+                        <li><strong>Shop</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+
+                <div class="product-sidebar">
+                    <div class="sidebar-title">
+                        <h2>Shopping Options</h2>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="single-sidebar-title">
+                            <h3>Type</h3>
+                        </div>
+                        <div class="single-sidebar-content">
+                        @await Component.InvokeAsync("Type")
+                        </div>
+                    </div>
+                    <div class="single-sidebar price">
+                        <div class="single-sidebar-content">
+                            <div class="price-range">
+                                <a asp-controller="Shop" asp-action="Index" type="submit"> <button>Reset</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner-left">
+                        <a href="#">
+                            <img src="~/img/product/banner_left.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-9" id="content">
+                    <div class="row" id="product_list">
+                        <div class="product-content">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active fade in home2" id="gird">
+                                    @foreach (var p in Model)
+                                    {
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="single-product">
+                                                <div class="product-img">
+                                                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@p.ProductID">
+                                                        <img src="@p.ProductImagePath" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="actions">
+                                                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@p.ProductID"><button type="submit" class="cart-btn" title="Add to cart">add to cart</button></a>
+                                                    <ul class="add-to-link">
+                                                        <li><a class="modal-view" data-target="#productModal" data-toggle="modal" href="#"> <i class="fa fa-search"></i></a></li>
+                                                        <li><a href="#"> <i class="fa fa-heart-o"></i></a></li>
+                                                        <li><a href="#"> <i class="fa fa-refresh"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product-price">
+                                                    <div class="product-name">
+                                                        <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@p.ProductID" title="Fusce aliquam">@p.ProductName</a>
+                                                    </div>
+                                                    <div class="price-rating">
+                                                        <span>$@p.ProductPrice</span>
+                                                        <div class="ratings">
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star-half-o"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            @Html.PagedListPager(
+                            Model,
+                            page =>Url.Action("Index", new{page=page, tid = ViewBag.tid}), new PagedListRenderOptions { ContainerDivClasses = new string[] {"toolbar-bottom"} }
+                            )
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- product main items area end -->

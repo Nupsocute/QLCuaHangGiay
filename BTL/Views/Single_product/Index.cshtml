@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ 
+    ViewData["Title"] = "SingleProduct";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Add your site or application content here -->
+   
+    <!-- single product area start -->
+    <div class="Single-product-location home2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="location">
+                        <ul>
+                            <li><a asp-controller="Store" asp-action="Index" title="go to homepage">Home<span>/</span></a>  </li>
+                            <li><strong> Fusce aliquam</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- single product area end -->
+    <!-- single product details start -->
+<partial name="single_product_details" />
+    <!-- single product details end -->
+    <!-- single product tab start -->
+<partial name="single_product_tab" />
+    <!-- single product tab end -->
+    <!-- upsell product area start-->
+<partial name="upsell_product" />
+    <!-- upsell product area end-->
+    <!-- related product area start-->
+<partial name="related_product" />
+    <!-- related product area end-->
+

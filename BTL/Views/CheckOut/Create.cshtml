@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["title"] = "CheckOut";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+<!-- checkout area start -->
+@model User
+<div class="checkout-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="location">
+                    <ul>
+                        <li><a asp-controller="Store" asp-action="Index" title="go to homepage">Home<span>/</span></a>  </li>
+                        <li><strong> checkout</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="product-sidebar">
+                    <div class="sidebar-title">
+                        <h2>Shopping Options</h2>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="single-sidebar-title">
+                            <h3>Category</h3>
+                        </div>
+                        <div class="single-sidebar-content">
+                            <ul>
+                                <li><a href="#">Dresses (4)</a></li>
+                                <li><a href="#">shoes (6)</a></li>
+                                <li><a href="#">Handbags (1)</a></li>
+                                <li><a href="#">Clothing (3)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="single-sidebar-title">
+                            <h3>Color</h3>
+                        </div>
+                        <div class="single-sidebar-content">
+                            <ul>
+                                <li><a href="#">Black (2)</a></li>
+                                <li><a href="#">Blue (2)</a></li>
+                                <li><a href="#">Green (4)</a></li>
+                                <li><a href="#">Grey (2)</a></li>
+                                <li><a href="#">Red (2)</a></li>
+                                <li><a href="#">White (2)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="banner-left">
+                        <a href="#">
+                            <img src="~/img/product/banner_left.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="checkout-banner hidden-xs">
+                    <a href="#">
+                        <img src="~/img/checkout/checkout_banner.jpg" alt="">
+                    </a>
+                </div>
+                <div class="checkout-heading">
+                    <h2>Checkout</h2>
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form asp-controller="CheckOut" asp-action="Create" method="post">
+                    <div class="checkout-accordion">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Step 1: Account & Billing Details
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="account-details">
+                                                    <h4>Your Personal Details</h4>
+                                                    <div class="form-box">
+                                                        <div class="form-name">
+                                                            <label asp-for="LoginID">LoginID<em>*</em> </label>
+                                                            <input asp-for="LoginID" value="@ViewBag.LoginID" readonly="readonly">
+                                                            <span asp-validation-for="LoginID" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-name">
+                                                            <label asp-for="UserID">UserID<em>*</em></label>
+                                                            <input asp-for="UserID" value="@ViewBag.UserID" readonly="readonly">
+                                                            <span asp-validation-for="UserID" class="text-danger"></span>
+                                                        </div>
+                                                        <div class="form-name">
+                                                            <label asp-for="Name">Your Name <em>*</em> </label>
+                                                            @if (@ViewBag.Name != null)
+                                                            {
+                                                                <input asp-for="Name" value="@ViewBag.Name" placeholder="Name">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="Name" placeholder="Name">
+                                                            }
+                                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="form-box">
+                                                        <div class="form-name">
+                                                            <label asp-for="Email">E-mail</label>
+                                                            @if (@ViewBag.Name != null)
+                                                            {
+                                                                <input asp-for="Email" value="@ViewBag.Email" placeholder="E-mail">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="Email" placeholder="E-mail">
+                                                            }
+                                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-box">
+                                                        <div class="form-name">
+                                                            <label asp-for="Phone">Phone<em>*</em> </label>
+                                                            @if (@ViewBag.Name != null)
+                                                            {
+                                                                <input asp-for="Phone" value="@ViewBag.Phone" placeholder="Telephone">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="Phone" placeholder="Telephone">
+                                                            }
+                                                            <span asp-validation-for="Phone" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="checkout-collapse">
+                                                    <h4>Your Address</h4>
+                                                    <div class="form-box">
+                                                        <div class="form-name">
+                                                            <label asp-for="Address">Address<em>*</em> </label>
+                                                            @if (@ViewBag.Name != null)
+                                                            {
+                                                                <input asp-for="Address" value="@ViewBag.Address" placeholder="Address">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input asp-for="Address" placeholder="Address">
+                                                            }
+                                                            <span asp-validation-for="Address" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit">Confirm Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- checkout area end -->

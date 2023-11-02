@@ -1,0 +1,10 @@
+﻿@model IEnumerable<BTL.Models.Type>
+
+<ul>
+    @foreach(var s in Model)
+    {
+        <li>
+            <a asp-controller="Shop" asp-action="Index" asp-route-tid = "@s.TypeID">@s.TypeName</a>
+        </li>
+    }
+</ul>

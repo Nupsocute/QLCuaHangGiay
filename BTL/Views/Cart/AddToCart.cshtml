@@ -1,0 +1,56 @@
+﻿@model BTL.Models.Product
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<div id="quickview-wrapper">
+    <!-- Modal -->
+    <div id="productModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-product">
+                        <div class="product-images">
+                            <div class="main-image images">
+                                <img alt="" src="@Model.ProductImagePath">
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <h1>@Model.ProductName</h1>
+                            <div class="price-box">
+                                <p class="price"><span class="special-price"><span class="amount">$@Model.ProductPrice</span></span></p>
+                            </div>
+                            <a asp-controller="Shop" asp-action="Index">See all features</a>
+                            <div class="quick-add-to-cart">
+                                <form method="post" class="cart" asp- asp-action="">
+                                    <button class="single_add_to_cart_button" type="submit" style="margin-top: 30px;" asp-controller="Cart" asp-action="AddTCart" asp-route-id="@Model.ProductID">Add to cart</button>
+                                </form>
+                            </div>
+
+                            <div class="quick-desc">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
+                            </div>
+                            <div class="share-post">
+                                <div class="share-title">
+                                    <h3>share this product</h3>
+                                </div>
+                                <div class="share-social">
+                                    <ul>
+                                        <li><a href="#"> <i class="fa fa-facebook"></i> </a></li>
+                                        <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
+                                        <li><a href="#"> <i class="fa fa-pinterest"></i> </a></li>
+                                        <li><a href="#"> <i class="fa fa-google-plus"></i> </a></li>
+                                        <li><a href="#"> <i class="fa fa-linkedin"></i> </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

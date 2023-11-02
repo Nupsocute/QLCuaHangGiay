@@ -1,0 +1,179 @@
+﻿@{
+    ViewData["Title"] = "SingleProduct";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+
+}
+@model BTL.Models.Cart
+<!-- cart item area start -->
+<div class="shopping-cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="location">
+                    <ul>
+                        <li><a asp-controller="Store" asp-action="Index" title="go to homepage">Home<span>/</span></a>  </li>
+                        <li><strong> Shopping cart</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table-bordered table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="cart-item-img"></th>
+                                <th class="cart-product-name">Product Name</th>
+                                <th class="edit">Size</th>
+                                <th class="move-wishlist">Color</th>
+                                <th>Brand</th>
+                                <th class="unit-price">Unit Price</th>
+                                <th class="quantity">Qty</th>
+                                <th class="subtotal">Subtotal</th>
+                                <th class="remove-icon"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach (var s in Model?.Lines)
+                            {
+                                <tr>
+                                    <td class="cart-item-img">
+                                        <a><img src="@ViewBag.ProductImage" alt=""></a>
+                                    </td>
+                                    <td class="cart-product-name">
+                                        <a>@s.Product.ProductName</a>
+                                    </td>
+                                    <td class="edit">
+                                        <a href="#">@ViewBag.SizeName</a>
+                                    </td>
+                                    <td class="move-wishlist">
+                                        <a href="#">@ViewBag.ColorName</a>
+                                    </td>
+                                    <td class="move-wishlist">
+                                        <a href="#">@ViewBag.BrandName</a>
+                                    </td>
+                                    <td class="unit-price">
+                                        <span>$@s.Product.ProductPrice</span>
+                                    </td>
+                                    <td class="quantity">
+                                        <div class="numbers-row">
+                                            <div class="number" style="margin-top: 30px">
+                                                @{
+                                                   if(@s.Quantity > 1){
+                                                        <a asp-controller="Cart" asp-action="UpTCart" asp-route-id="@s.Product.ProductID" class="minus btn"><i class="fa fa-minus"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="minus btn"><i class="fa fa-minus"></i></a>
+                                                    }
+                                                }
+                                                <input type="text" value="@s.Quantity" />
+                                                <a asp-controller="Cart" asp-action="AddTCart" asp-route-id="@s.Product.ProductID" class="plus btn"><i class="fa fa-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="subtotal">
+                                        <span>$@(s.Product.ProductPrice * s.Quantity)</span>
+                                    </td>
+                                    <td class="remove-icon">
+                                        <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@s.Product.ProductID">
+                                            <img src="~/img/cart/btn_remove.png" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="shopping-button">
+                        <div class="continue-shopping">
+                            <a asp-controller="Shop" asp-action="Index"><button>continue shopping</button></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="discount-code">
+                    <h3>Discount Codes</h3>
+                    <p>Enter your coupon code if you have one.</p>
+                    <input type="text">
+                    <div class="shopping-button">
+                        <button type="submit">apply coupon</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="estimate-shipping">
+                    <h3>Estimate Shipping and Tax</h3>
+                    <p>Enter your destination to get a shipping estimate.</p>
+                    <form action="#">
+                        <div class="form-box">
+                            <div class="form-name">
+                                <label> country <em>*</em> </label>
+                                <select>
+                                    <option value="1">Afghanistan</option>
+                                    <option value="1">Algeria</option>
+                                    <option value="1">American Samoa</option>
+                                    <option value="1">Australia</option>
+                                    <option value="1">Bangladesh</option>
+                                    <option value="1">Belgium</option>
+                                    <option value="1">Bosnia and Herzegovina</option>
+                                    <option value="1">Chile</option>
+                                    <option value="1">China</option>
+                                    <option value="1">Egypt</option>
+                                    <option value="1">Finland</option>
+                                    <option value="1">France</option>
+                                    <option value="1">United State</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-name">
+                                <label> State/Province </label>
+                                <select>
+                                    <option value="1">Please select region, state or province</option>
+                                    <option value="1">Arizona</option>
+                                    <option value="1">Armed Forces Africa</option>
+                                    <option value="1">California</option>
+                                    <option value="1">Florida</option>
+                                    <option value="1">Indiana</option>
+                                    <option value="1">Marshall Islands</option>
+                                    <option value="1">Minnesota</option>
+                                    <option value="1">New Mexico</option>
+                                    <option value="1">Utah</option>
+                                    <option value="1">Virgin Islands</option>
+                                    <option value="1">West Virginia</option>
+                                    <option value="1">Wyoming</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-name">
+                                <label> Zip/Postal Code </label>
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div class="shopping-button">
+                            <button type="submit">get a quote</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="totals">
+                    <p>subtotal <span>$@Model.ComputeTotalValue()</span> </p>
+                    <h3>Grand Total <span>$@Model.ComputeTotalValue()</span></h3>
+                    <div class="shopping-button">
+                        <a href="/CheckOut/Create"><button type="submit">proceed to checkout</button></a>
+                    </div>
+                    <a href="#">Checkout with Multiple Addresses</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- cart item area end -->
+

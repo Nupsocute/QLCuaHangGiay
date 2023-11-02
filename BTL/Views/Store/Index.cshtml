@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Store";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    var alter = TempData["Alter"];
+    TempData["Alter"] = null;
+}
+
+@if(alter != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> Order success
+    </div>
+}
+
+<!-- slider area start -->
+<partial name="Slider" />
+<!-- slider area end -->
+<!-- banner area start -->
+<partial name="Banner" />
+<!-- banner area end -->
+<!-- feature products area start -->
+<partial name="FeaturesProduct" />
+<!-- feature products area end -->
+<!-- another banner area start -->
+<partial name="AnotherBanner" />
+<!-- another banner area end -->
+<!-- new products area start -->
+<partial name="NewProduct" />
+<!-- new products area end -->
+<!-- blog area start -->
+<partial name="Blog" />
+<!-- blog area end -->
+<!-- newsleter area start -->
+<partial name="NewsLetter" />
+<!-- newsleter area end -->

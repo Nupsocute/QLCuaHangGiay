@@ -1,0 +1,140 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "CheckOut";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@model BTL.Models.Cart
+<!-- checkout area start -->
+<div class="checkout-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="location">
+                    <ul>
+                        <li><a asp-controller="Store" asp-action="Index" title="go to homepage">Home<span>/</span></a>  </li>
+                        <li><strong> checkout</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="product-sidebar">
+                    <div class="sidebar-title">
+                        <h2>Shopping Options</h2>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="single-sidebar-title">
+                            <h3>Category</h3>
+                        </div>
+                        <div class="single-sidebar-content">
+                            <ul>
+                                <li><a href="#">Dresses (4)</a></li>
+                                <li><a href="#">shoes (6)</a></li>
+                                <li><a href="#">Handbags (1)</a></li>
+                                <li><a href="#">Clothing (3)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="single-sidebar">
+                        <div class="single-sidebar-title">
+                            <h3>Color</h3>
+                        </div>
+                        <div class="single-sidebar-content">
+                            <ul>
+                                <li><a href="#">Black (2)</a></li>
+                                <li><a href="#">Blue (2)</a></li>
+                                <li><a href="#">Green (4)</a></li>
+                                <li><a href="#">Grey (2)</a></li>
+                                <li><a href="#">Red (2)</a></li>
+                                <li><a href="#">White (2)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="banner-left">
+                        <a href="#">
+                            <img src="~/img/product/banner_left.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="checkout-banner hidden-xs">
+                    <a href="#">
+                        <img src="~/img/checkout/checkout_banner.jpg" alt="">
+                    </a>
+                </div>
+                <div class="checkout-heading">
+                    <h2>Checkout</h2>
+                </div>
+                    <div class="checkout-accordion">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingSix">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                            Step 2: Confirm Order
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+                                    <div class="panel-body">
+                                        <div class="confirm-order">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Product Name</th>
+                                                            <th>Model</th>
+                                                            <th>Quantity</th>
+                                                            <th>Unit Price</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody>
+                                                        @foreach (var item in Model?.Lines)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <a href="#">@item.Product.ProductName</a>
+                                                                </td>
+                                                                <td>@item.Product.ProductID</td>
+                                                                <td>@item.Quantity</td>
+                                                                <td>@item.Product.ProductPrice</td>
+                                                                <td>$@(item.Product.ProductPrice * item.Quantity)</td>
+                                                            </tr>
+                                                        }                                                    
+                                                    </tbody>
+
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td class="text-right" colspan="4">
+                                                                <strong>Sub-Total:</strong>
+                                                            </td>
+                                                            <td>$@Model.ComputeTotalValue()</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-right" colspan="4">
+                                                                <strong>Flat Shipping Rate:</strong>
+                                                            </td>
+                                                            <td>$0.00</td>
+                                                        </tr>                                                       
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        <a asp-controller="CheckOut" asp-action="UpdateOrder"><button type="submit" class="check-button">Confirm Order</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- checkout area end -->
