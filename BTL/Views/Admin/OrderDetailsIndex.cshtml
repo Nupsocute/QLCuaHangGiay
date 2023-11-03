@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<OrderDetail>
+
+<style>
+
+    .pagedList {
+        justify-content: center;
+        display: flex;
+        margin: 10px 0;
+    }
+
+        .pagedList a {
+            margin: 10px;
+        }
+
+    .active {
+        margin: 0 10px
+    }
+
+</style>
+
+<div class="ms-2 mx-2">
+    <h1>Chi Tiết Hóa Đơn </h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th>Mã sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Màu sắc</th>
+                <th>kích cỡ</th>
+                <th>kiểu</th>
+                <th>Số Lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Product.ProductID</td>
+                    <td>@item.Product.ProductName</td>
+                    <td>@item.Product.Color.ColorName</td>
+                    <td>@item.Product.Size.SizeName</td>
+                    <td>@item.Product.Type.TypeName</td>
+                    <td>@item.Quantity</td>
+
+                </tr>
+            }
+            <div class="pagedList">
+                @Html.PagedListPager(Model, page => Url.Action("OrderDetailsIndex", new { page = page,OrderID=ViewBag.OrderID}))
+            </div>
+        </tbody>
+    </table>
+</div>

@@ -12,7 +12,7 @@ namespace BTL.Controllers
         private StoreContext db;
 
         public AdminController(StoreContext context)
-        {   
+        {
             this.db = context;
         }
         //public IActionResult Index()
@@ -21,6 +21,8 @@ namespace BTL.Controllers
         //    var products = db.Products.ToList();
         //    return View(products);
         //}
+
+
         public IActionResult Index(int? page)
         {
             int pageSize = 5;
@@ -31,9 +33,9 @@ namespace BTL.Controllers
         }
         [HttpGet]
         public IActionResult Create()
-        {   
-            ViewBag.ColorID = new SelectList(db.Colors.ToList(), "ColorID" , "ColorID");
-            ViewBag.SizeID = new SelectList(db.Sizes.ToList(), "SizeID" , "SizeID");
+        {
+            ViewBag.ColorID = new SelectList(db.Colors.ToList(), "ColorID", "ColorID");
+            ViewBag.SizeID = new SelectList(db.Sizes.ToList(), "SizeID", "SizeID");
             ViewBag.TypeID = new SelectList(db.Types.ToList(), "TypeID", "TypeID");
             return View();
         }
@@ -55,7 +57,7 @@ namespace BTL.Controllers
             ViewBag.ColorID = new SelectList(db.Colors.ToList(), "ColorID", "ColorID");
             ViewBag.SizeID = new SelectList(db.Sizes.ToList(), "SizeID", "SizeID");
             ViewBag.TypeID = new SelectList(db.Types.ToList(), "TypeID", "TypeID");
-            if ( ProductID == null || db.Products == null)
+            if (ProductID == null || db.Products == null)
             {
                 return NotFound();
             }
@@ -63,26 +65,26 @@ namespace BTL.Controllers
             if (products == null)
             {
                 return NotFound();
-            }        
+            }
             return View(products);
         }
         [HttpPost]
         public IActionResult Edit(string ProductID, [Bind("ProductID,ProductName, ProductPrice, ProductImagePath, ColorID, SizeID, TypeID")] Product product)
         {
-            if( ProductID != product.ProductID )
+            if (ProductID != product.ProductID)
             {
                 return NotFound();
             }
-            if( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 try
                 {
                     db.Products.Update(product);
                     db.SaveChanges();
                 }
-                catch ( DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
-                    if(!ProductExists(product.ProductID))
+                    if (!ProductExists(product.ProductID))
                     {
                         return NotFound();
                     }
@@ -94,7 +96,7 @@ namespace BTL.Controllers
             }
             return RedirectToAction("Index");
         }
-        private bool ProductExists( string ProductID)
+        private bool ProductExists(string ProductID)
         {
             return (db.Products?.Any(e => e.ProductID == ProductID)).GetValueOrDefault();
         }
@@ -103,13 +105,13 @@ namespace BTL.Controllers
         [HttpGet]
         public IActionResult Delete(string ProductID)
         {
-            if( ProductID == null || db.Products==null)
+            if (ProductID == null || db.Products == null)
             {
                 return NotFound();
             }
-            var products = db.Products.FirstOrDefault(p => p.ProductID == ProductID); 
-            if (products == null) 
-            { 
+            var products = db.Products.FirstOrDefault(p => p.ProductID == ProductID);
+            if (products == null)
+            {
                 return NotFound();
             }
             return View(products);
@@ -123,12 +125,46 @@ namespace BTL.Controllers
                 return Problem("db.Product trống");
             }
             var products = db.Products.Find(ProductID);
-            if( products != null)
+            if (products != null)
             {
                 db.Products.Remove(products);
             }
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult OrderDetailsIndex(int? page, string OrderID)
+        {
+            ViewBag.OrderID = OrderID;
+            int pageSize = 5;
+            int pagenumber = page == null || page < 0 ? 1 : page.Value;
+            var LstSanPham = db.OrderDetails
+                                        .Include(O => O.Product)
+                                        .ThenInclude(c => c.Color)
+                                        .Include(O => O.Product)
+                                        .ThenInclude(s => s.Size)
+                                        .Include(O => O.Product)
+                                        .ThenInclude(s => s.Type)
+                                        .Where(s => s.OrderID == OrderID)
+                                        .AsNoTracking().ToList(); ;
+            PagedList<OrderDetail> lst = new PagedList<OrderDetail>(LstSanPham, pagenumber, pageSize);
+            return View(lst);
+
+        }
+
+
+        public IActionResult OrderIndex(int? page)
+        {
+            int pageSize = 5;
+            int pagenumber = page == null || page < 0 ? 1 : page.Value;
+            var LstSanPham = db.Orders.AsNoTracking().ToList(); ;
+            PagedList<Order> lst = new PagedList<Order>(LstSanPham, pagenumber, pageSize);
+            return View(lst);
+        }
+
     }
 }
+
+
+
+//thanh them

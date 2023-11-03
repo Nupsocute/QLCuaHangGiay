@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Order>
+
+<style>
+
+    .pagedList {
+        justify-content: center;
+        display: flex;
+        margin: 10px 0;
+    }
+
+        .pagedList a {
+            margin: 10px;
+        }
+
+    .active {
+        margin: 0 10px
+    }
+
+</style>
+
+<div class="ms-2 mx-2">
+    <h1>Chi Tiết Hóa Đơn </h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th>Mã Đơn Hàng</th>
+                <th>Mã Người Dùng</th>
+                <th>Ngày Tạo</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.OrderID</td>
+                    <td>@item.UserID</td>
+                    <td>@item.CreatedDate</td>
+                    <td><a asp-action="OrderDetailsIndex" asp-route-OrderID="@item.OrderID">Chi Tiết</a></td>
+                    
+
+                </tr>
+                
+            }
+            
+            <div class="pagedList">
+                @Html.PagedListPager(Model, page => Url.Action("OrderIndex", new { page = page }))
+            </div>
+        </tbody>
+    </table>
+</div>
